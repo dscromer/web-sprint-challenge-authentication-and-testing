@@ -7,7 +7,12 @@ const router = express.Router()
 
 router.post("/register", async (req, res, next) => {
 	try {
-		const { username, password } = req.body
+    const { username, password } = req.body
+    if (!username || !password) {
+      return res.status(400).json({
+        message: "Please enter a username and password"
+      })
+    }
 		const user = await Users.findBy({ username }).first()
 
 		if (user) {
